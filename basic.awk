@@ -38,3 +38,27 @@ awk '{ print NF, $1, $NF }' emp.data
 
 echo ' #NR print the current row '
 awk '{ print NR, $0 }' emp.data
+
+echo '# text is printed with commas'
+awk '{ print "total pay for", $1, "is", $2 * $3 }' emp.data
+
+echo '# printf (format, value 1 , value 2 , ••• , value,) '
+echo '# when % is replaced with the nth argument'
+echo '# and .2f is the format'
+awk '{ printf("total pay for %s is $%.2f\n", $1, $2 * $3) }' emp.data
+
+echo '# the width can also be set with -Xs and X.X'
+awk '{ printf("%-8s $%6.2f\n", $1, $2 * $3) }' emp.data
+
+echo '# to sort the data, put the column to sort by as the first column and specify to use human sortable'
+echo '# this differs from the book, perhaps that was the old default'
+awk '{ printf("%6.2f %s\n", $2 * $3, $0) }' emp.data | sort -h
+
+echo '# select those with a calculation'
+awk '$2 * $3 > 50 { printf("$%.2f for %s\n", $2 * $3, $1) }' emp.data
+
+echo '# select for regex anywhere'
+awk '/Susie/ { print }' emp.data
+
+echo '# or selection'
+awk '$2 >= 4 || $3 >= 20 { print }' emp.data
