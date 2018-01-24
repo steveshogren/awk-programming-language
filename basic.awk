@@ -62,3 +62,24 @@ awk '/Susie/ { print }' emp.data
 
 echo '# or selection'
 awk '$2 >= 4 || $3 >= 20 { print }' emp.data
+
+echo '# separate criteria selection, will print lines twice'
+awk '$2 >= 4
+     $3 >= 20 { print }' emp.data
+
+echo '# logical not'
+awk '!( $2 < 4 && $3 < 20)' emp.data
+
+
+echo '# basic data validation, print lines that match'
+awk 'NF != 3 { print $0, "number of fields is not equal to 3" }
+     $2 < 3.35 { print SO, "rate is below minimum wage" }
+     $2 > 10 { print $0, "rate exceeds $10 per hour" }
+     $3 < 0 { print $0, "negative hours worked" }
+     $3 > 60 { print $0, "too many hours worked" }' emp.data
+
+set OFS="\t"
+echo '# header and footer selectors, also setting an output format separator'
+awk 'BEGIN { OFS="\t"; print "NAME","RATE","HOURS"; print "" }
+           { print $1,$2,$3} ' emp.data
+
