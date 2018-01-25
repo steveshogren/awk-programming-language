@@ -83,3 +83,18 @@ echo '# header and footer selectors, also setting an output format separator'
 awk 'BEGIN { OFS="\t"; print "NAME","RATE","HOURS"; print "" }
            { print $1,$2,$3} ' emp.data
 
+
+echo '# count emps with more than x hours'
+awk '$3 > 15 { emp = emp + 1 }
+     END { print emp, "employees worked more than 15 hours" }' emp.data
+
+echo '# count total lines'
+awk 'END { print NR, "employees" }' emp.data
+
+awk ' { pay = pay + $2 * $3 } 
+    END { print NR, "employees"
+    print "total pay is", pay
+    print "average pay is", pay/NR }' emp.data
+
+awk '$2 > maxrate { maxrate = $2; maxemp = $1 }
+    END { print "highest hourly rate:", maxrate, "for", maxemp } ' emp.data
