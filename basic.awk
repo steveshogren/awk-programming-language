@@ -91,10 +91,29 @@ awk '$3 > 15 { emp = emp + 1 }
 echo '# count total lines'
 awk 'END { print NR, "employees" }' emp.data
 
+echo '# basic variables'
 awk ' { pay = pay + $2 * $3 } 
     END { print NR, "employees"
     print "total pay is", pay
     print "average pay is", pay/NR }' emp.data
 
+echo '#  variables with strings, also first call on a variable is falsey?'
 awk '$2 > maxrate { maxrate = $2; maxemp = $1 }
     END { print "highest hourly rate:", maxrate, "for", maxemp } ' emp.data
+
+echo '# string concats into a variable'
+awk '{ names = names $1 " " } 
+     END { print names } ' emp.data
+
+echo '# print last input line by overwriting the variable'
+awk '{ last = $0 }
+    END { print last }' emp.data
+
+echo '# length function'
+awk '{ print $1, length($1) }' emp.data
+
+echo '# count words and characters'
+awk '{ nc = nc + length($0) + 1
+    nw = nw + NF
+    END print NR, "lines," , nw, "words,", nc, "Characters" } ' emp.data
+
