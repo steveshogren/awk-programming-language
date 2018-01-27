@@ -117,3 +117,76 @@ awk '{ nc = nc + length($0) + 1
     nw = nw + NF
     END print NR, "lines," , nw, "words,", nc, "Characters" } ' emp.data
 
+echo '# if statements for guarding'
+awk '$2 > 6 { n = n + 1; pay = pay + $2 * $3 }
+    END { if (n > 0)
+            print n, " employees, total pay is 11 , pay, "average pay is 11 , pay/n
+          else print "no employees are paid more than $6/hour 11"
+          }' emp.data
+
+echo '# while loop to compute compound interest'
+
+echo "1000000 .06 10" | awk '{ i = 1
+          while (i <= $3) {
+              printf("\t%.2f\n", $1 * (1 + $2) ^ i)
+              i = i + 1
+        }
+      }'
+
+echo '# using for to compute compound interest'
+echo "10000 .12 5" | awk '{ for( i = 1; i <= $3; i = i + 1) {
+                               printf("\t%.2f\n", $1 * (1 + $2) ^ i)
+                             }
+                          }'
+
+
+echo '# can use arrays to reverse input '
+awk ' { line[NR] = $0 }
+     END { i = NR
+           while ( i > 0) {
+                 print line[i]
+                 i = i - 1
+           }
+         }' emp.data
+
+
+echo '#1. Print the total number of input lines:'
+awk 'END {print NR}' emp.data
+echo '#2. Print the tenth input line:'
+awk 'NR == 10 {print}' emp.data
+echo '#3. Print the last field of every input line:'
+awk '{print $NF}' emp.data
+echo '#4. Print the last field of the last input line:'
+awk 'NR ==  {print }' emp.data
+# echo '#5. Print every input line with more than four fields:'
+# awk '{print}' emp.data
+# echo '#6. Print every input line in which the last field is more than 4:'
+# awk '{print}' emp.data
+# echo '#7. Print the total number of fields in all input lines:'
+# awk '{print}' emp.data
+# echo '#8. Print the total number of lines that contain Beth:'
+# awk '{print}' emp.data
+# echo '#9. Print the largest first field and the line that contains it (assumes some'
+# awk '{print}' emp.data
+# echo '#10. Print every line that has at least one field:'
+# awk '{print}' emp.data
+# echo '#11. Print every line longer than 80 characters:'
+# awk '{print}' emp.data
+# echo '#12. Print the number of fields in every line followed by the line itself:'
+# awk '{print}' emp.data
+# echo '#13. Print the first two fields, in opposite order, of every line:'
+# awk '{print}' emp.data
+# echo '#14. Exchange the first two fields of every line and then print the line:'
+# awk '{print}' emp.data
+# echo '#15. Print every line with the first field replaced by the line number:'
+# awk '{print}' emp.data
+# echo '#16. Print every line after erasing the second field:'
+# awk '{print}' emp.data
+# echo '#17. Print in reverse order the fields of every line:'
+# awk '{print}' emp.data
+# echo '#18. Print the sums of the fields of every line'
+# awk '{print}' emp.data
+# echo '#19. Add up all fields in all lines and print the sum:'
+# awk '{print}' emp.data
+# echo '#20. Print every line after replacing each field by its absolute value: '
+# awk '{print}' emp.data
