@@ -150,43 +150,44 @@ awk ' { line[NR] = $0 }
          }' emp.data
 
 
-echo '#1. Print the total number of input lines:'
+#1. Print the total number of input lines:'
 awk 'END {print NR}' emp.data
-echo '#2. Print the tenth input line:'
+#2. Print the tenth input line:'
 awk 'NR == 10 {print}' emp.data
-echo '#3. Print the last field of every input line:'
+#3. Print the last field of every input line:'
 awk '{print $NF}' emp.data
-echo '#4. Print the last field of the last input line:'
-awk 'NR ==  {print }' emp.data
-# echo '#5. Print every input line with more than four fields:'
+#4. Print the last field of the last input line:'
+awk '{ last = $NF }
+     END { print last}' emp.data
+# 5. Print every input line with more than four fields:'
+awk ' NF > 4 {print}' emp.data
+#6. Print every input line in which the last field is more than 4:'
 # awk '{print}' emp.data
-# echo '#6. Print every input line in which the last field is more than 4:'
+# #7. Print the total number of fields in all input lines:'
 # awk '{print}' emp.data
-# echo '#7. Print the total number of fields in all input lines:'
+# #8. Print the total number of lines that contain Beth:'
 # awk '{print}' emp.data
-# echo '#8. Print the total number of lines that contain Beth:'
+# #9. Print the largest first field and the line that contains it (assumes some'
 # awk '{print}' emp.data
-# echo '#9. Print the largest first field and the line that contains it (assumes some'
+# #10. Print every line that has at least one field:'
 # awk '{print}' emp.data
-# echo '#10. Print every line that has at least one field:'
+# #11. Print every line longer than 80 characters:'
 # awk '{print}' emp.data
-# echo '#11. Print every line longer than 80 characters:'
+# #12. Print the number of fields in every line followed by the line itself:'
 # awk '{print}' emp.data
-# echo '#12. Print the number of fields in every line followed by the line itself:'
+# #13. Print the first two fields, in opposite order, of every line:'
 # awk '{print}' emp.data
-# echo '#13. Print the first two fields, in opposite order, of every line:'
+# #14. Exchange the first two fields of every line and then print the line:'
 # awk '{print}' emp.data
-# echo '#14. Exchange the first two fields of every line and then print the line:'
+# #15. Print every line with the first field replaced by the line number:'
 # awk '{print}' emp.data
-# echo '#15. Print every line with the first field replaced by the line number:'
+# #16. Print every line after erasing the second field:'
 # awk '{print}' emp.data
-# echo '#16. Print every line after erasing the second field:'
+# #17. Print in reverse order the fields of every line:'
 # awk '{print}' emp.data
-# echo '#17. Print in reverse order the fields of every line:'
+# #18. Print the sums of the fields of every line'
 # awk '{print}' emp.data
-# echo '#18. Print the sums of the fields of every line'
+# #19. Add up all fields in all lines and print the sum:'
 # awk '{print}' emp.data
-# echo '#19. Add up all fields in all lines and print the sum:'
-# awk '{print}' emp.data
-# echo '#20. Print every line after replacing each field by its absolute value: '
+# #20. Print every line after replacing each field by its absolute value: '
 # awk '{print}' emp.data
