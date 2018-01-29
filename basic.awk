@@ -152,39 +152,57 @@ awk ' { line[NR] = $0 }
 
 #1. Print the total number of input lines:'
 awk 'END {print NR}' emp.data
+
 #2. Print the tenth input line:'
 awk 'NR == 10 {print}' emp.data
+
 #3. Print the last field of every input line:'
 awk '{print $NF}' emp.data
+
 #4. Print the last field of the last input line:'
 awk '{ last = $NF }
      END { print last}' emp.data
+
 # 5. Print every input line with more than four fields:'
 awk ' NF > 4 {print}' emp.data
+
 #6. Print every input line in which the last field is more than 4:'
-# awk '{print}' emp.data
+awk '$NF > 4 {print}' emp.data
+
 # #7. Print the total number of fields in all input lines:'
-# awk '{print}' emp.data
+awk '{total = total + NF} END {printf("total: %X\n", total); print $0}' emp.data
+
 # #8. Print the total number of lines that contain Beth:'
-# awk '{print}' emp.data
-# #9. Print the largest first field and the line that contains it (assumes some'
-# awk '{print}' emp.data
+awk '/Beth/ {count = count + 1} END {printf("lines with Beth: %X\n", count)}' emp.data
+
+# #9. Print the largest first field and the line that contains it (assumes some $1 is positive): 
+awk 'maxField < $2 {maxField = $2; maxRow = $0}
+     END { print maxRow }' emp.data
+
 # #10. Print every line that has at least one field:'
-# awk '{print}' emp.data
+awk '0 < $NF {print}' emp.data
+
 # #11. Print every line longer than 80 characters:'
-# awk '{print}' emp.data
+awk '80 < length($0) {print}' emp.data
+
 # #12. Print the number of fields in every line followed by the line itself:'
-# awk '{print}' emp.data
+awk '{print NF, $0}' emp.data
+
 # #13. Print the first two fields, in opposite order, of every line:'
-# awk '{print}' emp.data
+awk '{print $2, $1}' emp.data
+
 # #14. Exchange the first two fields of every line and then print the line:'
-# awk '{print}' emp.data
+awk '{temp = $1; $1 = $2; $2 = temp; print $0}' emp.data
+
 # #15. Print every line with the first field replaced by the line number:'
-# awk '{print}' emp.data
+awk '{$1 = NR; print}' emp.data
+
 # #16. Print every line after erasing the second field:'
-# awk '{print}' emp.data
+awk '{$2 = ""; print}' emp.data
+
 # #17. Print in reverse order the fields of every line:'
-# awk '{print}' emp.data
+awk '{print}' emp.data
+
 # #18. Print the sums of the fields of every line'
 # awk '{print}' emp.data
 # #19. Add up all fields in all lines and print the sum:'
