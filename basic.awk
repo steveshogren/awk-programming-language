@@ -201,10 +201,29 @@ awk '{$1 = NR; print}' emp.data
 awk '{$2 = ""; print}' emp.data
 
 # #17. Print in reverse order the fields of every line:'
-awk '{print}' emp.data
+awk '{for (i = 1; i <= NF; i++){
+          line[i] = $i
+      }
+      for (i = NF; i > 0; i--) printf("%s ", line[i])
+      printf("\n")
+      }' emp.data
 
 # #18. Print the sums of the fields of every line'
-# awk '{print}' emp.data
+awk '{
+          print
+          for(i = 1; i<=NF; i++){
+            fields[i] = fields[i] + $i
+          }
+     }
+      END {
+          printf("---------------\n")
+          for(i = 1; i<=NF;i++) {
+            printf("%s ", fields[i])
+          }
+      }
+    ' emp.data
+
+
 # #19. Add up all fields in all lines and print the sum:'
 # awk '{print}' emp.data
 # #20. Print every line after replacing each field by its absolute value: '
