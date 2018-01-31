@@ -209,6 +209,15 @@ awk '{for (i = 1; i <= NF; i++){
       }' emp.data
 
 # #18. Print the sums of the fields of every line'
+awk '{for(i=1;i<=NF;i++){
+        sum = sum + $i
+        printf("%s ", $i)
+      }
+      printf("%i \n", sum)
+      sum = 0
+      } ' emp.data
+
+# #19. Add up all fields in all lines and print the sum:
 awk '{
           print
           for(i = 1; i<=NF; i++){
@@ -223,8 +232,5 @@ awk '{
       }
     ' emp.data
 
-
-# #19. Add up all fields in all lines and print the sum:'
-# awk '{print}' emp.data
-# #20. Print every line after replacing each field by its absolute value: '
+# #20. Print every line after replacing each field by its absolute value:
 # awk '{print}' emp.data
