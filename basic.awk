@@ -233,4 +233,12 @@ awk '{
     ' emp.data
 
 # #20. Print every line after replacing each field by its absolute value:
-# awk '{print}' emp.data
+echo "1 2 -1 -2" | awk '{ for(i = 1; i <= NF; i++) {
+         if($i > 0) {
+            printf("%i ", $i)
+         } else {
+            printf("%i ", $i*-1)
+         }
+       }
+       printf("\n")
+     }'
