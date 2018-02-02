@@ -242,3 +242,7 @@ echo "1 2 -1 -2" | awk '{ for(i = 1; i <= NF; i++) {
        }
        printf("\n")
      }'
+
+# fix the countries formatting
+awk 'BEGIN { OFS="\t"; }
+           { print $1,$2,$3,$4} ' countries
