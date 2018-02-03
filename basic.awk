@@ -246,3 +246,20 @@ echo "1 2 -1 -2" | awk '{ for(i = 1; i <= NF; i++) {
 # fix the countries formatting
 awk 'BEGIN { OFS="\t"; }
            { print $1,$2,$3,$4} ' countries
+
+# \ allows long lines
+awk '{ print \
+        $1,
+        $2, $3}' countries
+
+# print countries with column headers and totals
+awk ' BEGIN { FS = "\t" # make tab the field separator
+              printf("%10s %6s %5s %s\n\n",
+                     "COUNTRY", "AREA", "POP", "CONTINENT")
+            }
+      {
+        printf("%10s %6d %5d %s\n", $1, $2, $3, $4)
+        area = area + $2
+        pop = pop + $3
+      }
+      END { printf( "\n%10s %6d %5d\n", "TOTAL", area, pop) }' countries
