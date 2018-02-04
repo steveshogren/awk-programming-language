@@ -263,3 +263,15 @@ awk ' BEGIN { FS = "\t" # make tab the field separator
         pop = pop + $3
       }
       END { printf( "\n%10s %6d %5d\n", "TOTAL", area, pop) }' countries
+
+# forth field doesn't contain Asia
+awk '$4 != /Asia/ {print}' countries
+
+# forth field doesn't contain Asia
+awk '$4 != /Asia/ {print}' countries
+
+# exactly three characters
+awk '^...$ {print}' countries
+
+# exactly three characters
+awk '^...$ {print}' countries
