@@ -275,3 +275,21 @@ awk '^...$ {print}' countries
 
 # exactly three characters
 awk '^...$ {print}' countries
+
+# sum each column
+awk '
+    { for (i = 1; i <= NF; i++) {
+        sum[i] += $i
+      }
+      if (NF  > maxfld) {
+         maxfld = NF
+      }
+    }
+    END {
+        for(i = i; i <= NF; i++ ) {
+        
+        } 
+    }
+
+
+' countries
