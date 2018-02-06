@@ -264,32 +264,35 @@ awk ' BEGIN { FS = "\t" # make tab the field separator
       }
       END { printf( "\n%10s %6d %5d\n", "TOTAL", area, pop) }' countries
 
-# forth field doesn't contain Asia
-awk '$4 != /Asia/ {print}' countries
+# forth field contain Asia
+awk '$4 = /Asia/ { print }' countries
 
 # forth field doesn't contain Asia
-awk '$4 != /Asia/ {print}' countries
+awk '$4 =! /Asia/ { print $0 }' countries
 
 # exactly three characters
-awk '^...$ {print}' countries
-
-# exactly three characters
-awk '^...$ {print}' countries
+echo "aaa
+bb
+cccc" |
+awk '/^...$/ {print}'
 
 # sum each column
-awk '
+echo "10 20 30
+40 50 60" | awk '
     { for (i = 1; i <= NF; i++) {
         sum[i] += $i
       }
-      if (NF  > maxfld) {
+      if (NF > maxfld) {
          maxfld = NF
       }
     }
     END {
-        for(i = i; i <= NF; i++ ) {
-        
+        for(i = i; i <= maxfld; i++ ) {
+              printf("%i", sum[i])   
+              if (i < maxfld) {
+                 printf("\t")
+              } else {
+                 printf("\n")
+              }
         } 
-    }
-
-
-' countries
+    } '
