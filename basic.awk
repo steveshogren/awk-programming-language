@@ -297,7 +297,7 @@ echo '
       }
     }
     END {
-        for(i = i; i <= maxfld; i++) {
+        for(i = 1; i <= maxfld; i++) {
               printf("%g", sum[i])   
               if (i < maxfld) {
                  printf("\t")
