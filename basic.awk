@@ -271,14 +271,24 @@ awk '$4 = /Asia/ { print }' countries
 awk '$4 =! /Asia/ { print $0 }' countries
 
 # exactly three characters
-echo "aaa
+echo "
+11
+aaa
 bb
 cccc" |
 awk '/^...$/ {print}'
 
 # sum each column
+
 echo "10 20 30
-40 50 60" | awk '
+40 50 60
+" | awk '{ for(i = 1; i <= NF; i++) {
+                     print $i 
+                   }}'
+
+echo '
+10 20 30
+40 50 60' | awk '
     { for (i = 1; i <= NF; i++) {
         sum[i] += $i
       }
@@ -287,8 +297,8 @@ echo "10 20 30
       }
     }
     END {
-        for(i = i; i <= maxfld; i++ ) {
-              printf("%i", sum[i])   
+        for(i = i; i <= maxfld; i++) {
+              printf("%g", sum[i])   
               if (i < maxfld) {
                  printf("\t")
               } else {
@@ -296,3 +306,5 @@ echo "10 20 30
               }
         } 
     } '
+
+set +v
