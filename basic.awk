@@ -307,4 +307,41 @@ echo '
         } 
     } '
 
+
+echo '1 2 3
+4 5 6' | awk '
+  NR == 1 {nfld = NF}
+  { for (i = 1; i <= NF; i++){
+      sum[i] += $i
+    }
+    if (NF != nfld)
+       print "line " NR " has" NF "entries, not " nfld
+  }
+  END {
+        for(i = 1; i <= nfld; i++) printf("%g%s", sum[i], i < nfld ? "\t" : "\n")
+        } 
+'
+
+
+awk ' NR==1 {
+           nfld = NF
+           for (i = 1; i <= NF; i++) numcol[i] = isnum($i)
+      }
+      { 
+        for (i = 1; i <= NF; i++)
+           if (numcol[i])
+              sum[i] += $i
+      }
+      END { for (i = 1; i <= nfld; i++) {
+               if (numcol[i])
+                 printf ( "%g" , sum[i])
+               else
+                 printf( "--")
+               printf(i < nfld ?  "\t" : "\n")
+             }
+      }
+      function isnum(n) { return n - /^[+-]?[0-9]+$/ }
+      ' countries
+
+
 set +v
