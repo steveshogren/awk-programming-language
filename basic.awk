@@ -342,6 +342,52 @@ awk ' NR==1 {
       }
       function isnum(n) { return n - /^[+-]?[0-9]+$/ }
       ' countries
+# Exercise 3-1. Modify the program sum3 to ignore blank lines. 
+echo ' 1 a 3
+
+4 b 5' |
+awk ' NR==1 {
+           nfld = NF
+           for (i = 1; i <= NF; i++) numcol[i] = isnum($i)
+      }
+      { 
+        for (i = 1; i <= NF; i++)
+           if (numcol[i] && NF != 0)
+              sum[i] += $i
+      }
+      END { for (i = 1; i <= nfld; i++) {
+               if (numcol[i])
+                 printf ( "%g" , sum[i])
+               else
+                 printf( "--")
+               printf(i < nfld ?  "\t" : "\n")
+             }
+      }
+      function isnum(n) { return n - /^[+-]?[0-9]+$/ }
+      '
+
+# Exercise 3-4. Write a program that reads a list of item and quantity pairs and for each
+# item on the list accumulates the total quantity; at the end, it prints the items and total
+# quantities, sorted alphabetically by item. 
+echo 'a 1
+b 2
+d 4
+a 4
+c 5
+a 1
+' |
+awk ' 
+      { 
+         itemCnt[$1] += $2
+      }
+      END { for (item in itemCnt) {
+               if(itemCnt[item] > 0) {
+               
+                  printf("%s: %i\n", item, itemCnt[item])
+               }
+             }
+      }
+      '
 
 
 set +v
