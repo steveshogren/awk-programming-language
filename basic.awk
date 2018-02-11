@@ -401,4 +401,26 @@ awk '
                  printf("%10.2f %5.1f\n", x[i], 100*x[i]/sum)}
 '
 
+echo '3
+4
+54
+60
+3
+20
+3
+54
+6' | awk '
+   { x[int($1/10)]++ }
+   END { for (i = 0; i < 10; i++)
+            printf(" %2d - %2d: %3d %s\n",
+                  10*i, 10*i+9, x[i], rep(x[i],"*"))
+        printf("100: %3d %s\n", x[10], rep(x[10],"*")) 
+   }
+   function rep(n,s,t) {
+      while (n-- > 0)
+          t = t s
+      return t 
+   }
+'
+
 set +v
