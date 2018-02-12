@@ -401,15 +401,11 @@ awk '
                  printf("%10.2f %5.1f\n", x[i], 100*x[i]/sum)}
 '
 
-echo '3
-4
-54
-60
-3
-20
-3
-54
-6' | awk '
+awk 'BEGIN {
+      for (i = 1; i <= 200; i++)
+        print int(101*rand()) 
+   }' |
+awk '
    { x[int($1/10)]++ }
    END { for (i = 0; i < 10; i++)
             printf(" %2d - %2d: %3d %s\n",
