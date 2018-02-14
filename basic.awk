@@ -402,18 +402,32 @@ awk '
 '
 
 awk 'BEGIN {
-      for (i = 1; i <= 2000; i++)
-        print int(101*rand()) 
+      for (i = 1; i <= 200; i++)
+        print int(101*rand()) * 7
    }' |
 awk '
-   { total=total+1; x[int($1/10)]++ }
-   END { for (i = 0; i < 10; i++)
-            printf(" %2d - %2d: %3d %s\n",
-                  10*i, 10*i+9, x[i], rep(scale(total, x[i], 80),"*"))
-        printf("100: %3d %s\n", x[10], rep(scale(total, x[10], 80),"*")) 
+   { total=total+1;
+     data[NR] = $1
+     if($1 > max) {
+        max = $1 
+     }
+   }
+   END {
+       bucketCount = 7
+       for (i = 0; i < NR; i++) {
+             buckets[ceil((data[i] / max) * bucketCount)]++
+       }
+       for (b = 1; b <= bucketCount; b++) {
+           increment = int(max/bucketCount)
+           printf(" %2d - %2d: %3d %s\n",
+                  (increment*(b-1)), (increment*b), buckets[b], rep(scale(total, buckets[b], 80),"*"))
+       }
    }
    function scale(total, count, max) {
       return int((count/total)*max)
+   }
+   function ceil(val) {
+      return (val == int(val)) ? val : int(val)+1
    }
    function rep(n,s,t) {
       while (n-- > 0)
