@@ -436,4 +436,33 @@ awk '
    }
 '
 
+# remove commas used to denote thousands places
+echo '5,500.0
+2,200.0
+3,200.0
+5,000.0
+' | awk '
+  { gsub(/,/, "");
+    sum += $0}
+  END { print sum}
+'
+
+# put commas in numbers
+echo '5000
+6000
+-1000' | awk '
+     { printf("%-12s $20s\n", $0, addcomma($0))}
+     function addcomma(x, num) {
+         if(x < 0) {
+              return "-" addcomma(-x)
+         }
+         num = sprintf("%.2f", x)
+         while (num - /[0-9][0-9][0-9][0-9]/) {
+              sub(/[0-9][0-9][0-9][,.]/, ",&", num)
+         }
+         return num 
+     }
+'
+
+
 set +v
