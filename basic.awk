@@ -468,5 +468,39 @@ echo '5000
      }
 '
 
+echo '5,500.0
+2,200.0
+3,200.0
+5,000.0
+5,000,000,00.0
+5,000,0,000.0
+5,00,00,00.0
+5,000000.0
+' | awk '
+  {sum += removecomma($0)}
+
+  END {
+    if (_assert_exit)
+        exit 1
+  print sum}
+
+function assert(condition, string)
+{
+    if (! condition) {
+        printf("%s:%d: assertion failed: %s\n",
+            FILENAME, FNR, string) > "/dev/stderr"
+        _assert_exit = 1
+        exit 1
+    }
+}
+
+  function removecomma(x) {
+
+     bad = (x ~ /[0-9][0-9][0-9][0-9]/ || x ~ /[,.][0-9][0-9][,.]/ || x ~ /[,.][0-9][,.]/)
+     assert(!bad, x " had bad commas")
+     gsub(/,/, "", x);
+     return x
+  }
+'
 
 set +v
