@@ -503,4 +503,17 @@ function assert(condition, string)
   }
 '
 
+echo '013042 marys birthday
+032772 marks birthday
+052470 anniversary
+061209 mothers birthday
+110175 elizabeths birthday' | awk '
+# date convert - convert mmddyy into yymmdd in $1
+  { $1 = substr($1,5,2) substr($1,1,2) substr($1,3,2); print } 
+'
+# Exercise 3-8. How would you convert dates into a form in which you can do arithmetic
+# like computing the number of days between two dates'?
+
+
+
 set +v
