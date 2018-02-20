@@ -524,5 +524,21 @@ echo '013042 marys birthday
     print $1 " " strftime("%b %e %Y", $1)}
 '
 
+# output of the nm for a c program
+echo 'file.o:
+00000c80 T addroot
+00000b30 T -checkdev
+00000a3c T -checkdupl
+         u -chown
+         u client
+         u close
+funmount.o:
+00000000 T funmount
+         U cerror 
+' | awk '
+  NF == 1 { file = $1 }
+  NF == 2 { print file, $1, $2 }
+  NF == 3 { print file, $1, $2, $3 }
+'
 
 set +v
