@@ -534,11 +534,36 @@ echo 'file.o:
          u close
 funmount.o:
 00000000 T funmount
-         U cerror 
+         U cerror
 ' | awk '
   NF == 1 { file = $1 }
   NF == 2 { print file, $1, $2 }
   NF == 3 { print file, $1, $2, $3 }
 '
 
+echo '001	100	Jim Jimsmith
+blah
+002	230.00	Sam Samsmith' | awk '
+BEGIN {
+      FS = "\t";
+      dashes = sp45 = sprintf("%45s"," ");
+      gsub(/ /, "-", dashes);
+      "date" | getline date;
+      split(date, d, " ");
+      date = d[2] " " d[3] ", " d[6];
+      initnum();
+}
+NF != 3 || $2 >= 10000000 {
+   printf("\n line %d illegal:\n%s\n\nVOID\nVOID\n\n\n", NR, $0)
+   next
+}
+
+function initnum() {
+          split("one two three four five six seven eight nine ten" \
+                "eleven twelve thirteen fourteen fifteen sixteen" \
+                "seventeen eighteen nineteen", nums, " ")
+          split("ten twenty thirty forty fifty sixty seventy eighty ninety", tens, " ")
+}
+
+'
 set +v
