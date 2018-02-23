@@ -562,7 +562,7 @@ NF != 3 || $2 >= 10000000 {
   printf("%s%s\n", sp45, $1)
   printf("%s%s\n", sp45, date)
   amt = sprintf("%.2f", $2)
-  printf("Pay to %45.45s  $%s\n", $3 dashes, amt)
+  printf("Pay to %45.45s  $%s\n", $3 dashes, addcomma(amt))
   printf("the sum of %s\n", numtowords(amt))
   printf("\n\n\n")
 }
@@ -591,6 +591,17 @@ function initnum() {
                 "eleven twelve thirteen fourteen fifteen sixteen" \
                 "seventeen eighteen nineteen", nums, " ")
           split("ten twenty thirty forty fifty sixty seventy eighty ninety", tens, " ")
+}
+
+function addcomma(x) {
+    if(x < 0) {
+         return "-" addcomma(-x)
+    }
+    num = sprintf("%.2f", x)
+    while (num ~ /[0-9][0-9][0-9][0-9]/) {
+         sub(/[0-9][0-9][0-9][,.]/, ",&", num)
+    }
+    return num 
 }
 
 '
