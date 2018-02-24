@@ -543,7 +543,8 @@ funmount.o:
 
 echo '001	920321.32	Jim Jimsmith
 blah
-002	230.14	Sam Samsmith' | awk '
+-300
+002	3123455.14	Sam Samsmith' | awk '
 BEGIN {
       FS = "\t";
       dashes = sp45 = sprintf("%45s"," ");
@@ -553,8 +554,8 @@ BEGIN {
       date = d[2] " " d[3] ", " d[6];
       initnum();
 }
-NF != 3 || $2 >= 10000000 {
-   printf("\n line %d illegal:\n%s\n\nVOID\nVOID\n\n\n", NR, $0)
+NF != 3 || $2 >= 10000000 || $0 ~ /\-/ {
+   printf("\n line %d illegal:\n%s", NR, $0)
    next
 }
 {
@@ -563,8 +564,35 @@ NF != 3 || $2 >= 10000000 {
   printf("%s%s\n", sp45, date)
   amt = sprintf("%.2f", $2)
   printf("Pay to %45.45s  $%s\n", $3 dashes, addcomma(amt))
-  printf("the sum of %s\n", numtowords(amt))
+
+  output = numtowords(amt)
+  if (length(output) > 80) {
+     output = splitOutput(output)
+  }
+  printf("the sum of %s\n", output)
   printf("\n\n\n")
+}
+
+function splitOutput(output) {
+         ret = ""
+         split(output, words, " ")
+         currentLineLength = 0 
+         for (i = 0; i < length(words); i++) {
+            word = words[i]
+            if(currentLineLength + length(word) > 48) {
+                 ret = ret "\n" word
+                 currentLineLength = 0
+            } else {
+                 if(length(ret) > 0) {
+                    ret = ret " " word
+                 } else {
+                    ret = word
+                 }
+                 currentLineLength += length(word)
+            }
+         }
+         
+         return ret;
 }
 
 function numtowords(n) {
@@ -577,6 +605,8 @@ function numtowords(n) {
 
 function intowords(n) {
          n = int(n)
+         if (n >= 1000000)
+            return intowords(n/1000000) " million " intowords(n%1000000)
          if (n >= 1000)
             return intowords(n/1000) " thousand " intowords(n%1000)
          if (n >= 100)
