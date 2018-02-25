@@ -541,10 +541,12 @@ funmount.o:
   NF == 3 { print file, $1, $2, $3 }
 '
 
-echo '001	920321.32	Jim Jimsmith
+echo '000	1	Sam Samwise
+001	920321.32	Jim Jimsmith
 blah
--300
-002	3123455.14	Sam Samsmith' | awk '
+-30 0
+002	3123455.14	Sam Samsmith
+003	20.32	Jim Jimsmith' | awk '
 BEGIN {
       FS = "\t";
       dashes = sp45 = sprintf("%45s"," ");
@@ -600,7 +602,12 @@ function numtowords(n) {
          dols = substr(n, 1, length(n)-3)
          if(dols == 0)
                  return "zero dollars and " cents " cents exactly"
-         return intowords(dols) " dollars and " cents " cents exactly"
+         if(dols == "1") {
+            dollars = " dollar"
+         } else {
+            dollars = " dollars"
+         }
+         return intowords(dols) dollars " and " cents " cents exactly"
 }
 
 function intowords(n) {
@@ -611,8 +618,13 @@ function intowords(n) {
             return intowords(n/1000) " thousand " intowords(n%1000)
          if (n >= 100)
             return intowords(n/100) " hundred " intowords(n%100)
-         if (n >= 20)
-            return tens[int(n/10)] " " intowords(n%10)
+         if (n >= 20) {
+            onesPlace = intowords(n%10)
+            if (onesPlace != "") {
+              onesPlace = "-" onesPlace 
+            }
+            return tens[int(n/10)] onesPlace 
+         }
          return nums[n]
 }
 
