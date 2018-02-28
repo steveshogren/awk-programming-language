@@ -668,5 +668,31 @@ NR == 1 {
 function isnum(n) { return n ~ /^[+-]?[0-9]+$/ }
 '
 
+echo '.P1 blah
+test
+.P1 bleh
+.P2 bam
+test
+.P2 boom
+.P1 blah
+test
+.P1 bleh
+.P2 bam
+bad test
+.P1 boom' | awk '
+/^\.P[0-9]+/
+{
+   if(count == 1 && last != $1) {
+      printf("Found %d without a closing %d", $1, last)
+   } else if(count == 0) {
+      count = 1
+   } else if (count == 1 && last == $1) {
+      count = 0
+   }
+   last = $1
+}
 
+END { if (count != 0) printf("Missing %d at end",last) }
+
+'
 set +v
