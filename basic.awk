@@ -668,7 +668,8 @@ NR == 1 {
 function isnum(n) { return n ~ /^[+-]?[0-9]+$/ }
 '
 
-echo '.P1 blah
+echo '
+.P1 blah
 test
 .P1 bleh
 .P2 bam
@@ -680,10 +681,14 @@ test
 .P2 bam
 bad test
 .P1 boom' | awk '
-/^\.P[0-9]+/
-{
+BEGIN {
+      count = 0
+}
+/^\.P[0-9]+/ {
+   print $1
    if(count == 1 && last != $1) {
-      printf("Found %d without a closing %d", $1, last)
+      printf("Found %s without a closing %s on line %d\n", $1, last, NR)
+      count = 0
    } else if(count == 0) {
       count = 1
    } else if (count == 1 && last == $1) {
