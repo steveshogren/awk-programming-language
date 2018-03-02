@@ -669,26 +669,22 @@ function isnum(n) { return n ~ /^[+-]?[0-9]+$/ }
 '
 
 echo '
-.P1 blah
-test
-.P1 bleh
-.P2 bam
-test
-.P2 boom
-.P1 blah
-test
-.P1 bleh
-.P2 bam
-bad test
-.P1 boom' | awk '
+.P1
+.P2
+.P1
+.P2
+.P2
+.P1
+.P1
+' | awk '
 BEGIN {
       count = 0
 }
 /^\.P[0-9]+/ {
    print $1
    if(count == 1 && last != $1) {
-      printf("Found %s without a closing %s on line %d\n", $1, last, NR)
-      count = 0
+      printf("Found %s instead of a closing %s on line %d\n", $1, last, NR)
+      count = 1
    } else if(count == 0) {
       count = 1
    } else if (count == 1 && last == $1) {
