@@ -694,6 +694,29 @@ BEGIN {
 }
 
 END { if (count != 0) printf("Missing %d at end",last) }
+'
+
+echo 'root:qyxRi2uhuVjrg:0:2::/:
+bwk:1L./v6iblzzNE:9:1:Brian Kernighan:/usr/bwk:
+ava:otxs1oTVoyvMQ:15:1:Al Aho:/usr/ava:
+uucp:xutiBs2hKtcls:48:1:uucp daemon:/usr/lib/uucp:uucico
+pjw:xNqy//GDc8FFg:170:2:Peter Weinberger:/usr/pjw:
+pjw:xNqy//GDc8FFg:170:2:Peter Weinberger:usr/pjw:
+pjw:xNqy//GDc8FFg:170:a:Peter Weinberger:/usr/pjw:
+pjw:xNqy//GDc8FFg:1a0:2:Peter Weinberger:/usr/pjw:
+p*jw:xNqy//GDc8FFg:170:2:Peter Weinberger:/usr/pjw:
+pjw::170:2:Peter Weinberger:/usr/pjw:
+mark:jOz1fuQmqivdE:374:1:Mark Kernighan:/usr/bwk/mark:' | awk '
+
+BEGIN {FS = ":" }
+NF != 7 {printf("line %d, does not have 7 fields: %s\n", NR, $0) }
+$1 ~ /[^A-Za-z0-9]/ { printf("line %d, nonalphanumeric user id: %s\n", NR, $0) }
+$2 == "" { printf("line %d, no password: %s\n", NR, $0) }
+$3 ~ /[^0-9]/ {printf("line %d, nonnumeric user id: %s\n", NR, $0) }
+$4 ~ /[^0-9]/ {printf("line %d, nonnumeric group id: %s\n", NR, $0) }
+$6 !~ /^\// { printf("line %d, invalid login directory: %s\n", NR, $0)  }
 
 '
+
+
 set +v
