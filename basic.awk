@@ -727,7 +727,7 @@ $4 ~ /[^0-9]/	nonnumeric group id
 $6 !~ /^\//	invalid login directory' | awk '
 BEGIN { FS = "\t+" }
 $1 ~ /^CODE/ { print $2}
-$1 !~ /^CODE/ { printf("%s {\n\tprintf(\"line %%d, %s: %%s\\n\",NR,$0) }\n", $1, $2)} 
+$1 !~ /^CODE/ && NF == 2 { printf("%s {\n\tprintf(\"line %%d, %s: %%s\\n\",NR,$0) }\n", $1, $2)} 
 '
 
 
