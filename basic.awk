@@ -715,7 +715,19 @@ $2 == "" { printf("line %d, no password: %s\n", NR, $0) }
 $3 ~ /[^0-9]/ {printf("line %d, nonnumeric user id: %s\n", NR, $0) }
 $4 ~ /[^0-9]/ {printf("line %d, nonnumeric group id: %s\n", NR, $0) }
 $6 !~ /^\// { printf("line %d, invalid login directory: %s\n", NR, $0)  }
+'
 
+echo '
+CODE	BEGIN {FS = ":" }
+NF != 7	does not have 7 fields
+$1 ~ /[^A-Za-z0-9]/	nonalphanumeric user id
+$2 == ""	no password
+$3 ~ /[^0-9]/	nonnumeric user id
+$4 ~ /[^0-9]/	nonnumeric group id
+$6 !~ /^\//	invalid login directory' | awk '
+BEGIN { FS = "\t+" }
+$1 ~ /^CODE/ { print $2}
+$1 !~ /^CODE/ { printf("%s {\n\tprintf(\"line %%d, %s: %%s\\n\",NR,$0) }\n", $1, $2)} 
 '
 
 
