@@ -730,5 +730,6 @@ $1 ~ /^CODE/ { print $2}
 $1 !~ /^CODE/ && NF == 2 { printf("%s {\n\tprintf(\"line %%d, %s: %%s\\n\",NR,$0) }\n", $1, $2)} 
 '
 
+cat compat.awk | awk -f compat.awk
 
 set +v
