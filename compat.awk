@@ -10,14 +10,14 @@ BEGIN {
 /#/  { sub(/#.*/, "", line) }
 
 {
-    n = split(line, x, "[^A-Za-z0-9_]+") # into words
+    n = split(line, words, "[^A-Za-z0-9_]+") # into words
     for ( i = 1; i <= n; i++) {
-        if (x[i] in fcns)
-            warn(x[i] " is now a built-in function")
-        if (x[i] in vars)
-            warn(x[i] " is now a built-in variable")
-        if (x[i] in keys)
-            warn(x[i] " is now a keyword")
+        if (words[i] in fcns)
+            warn(words[i] " is now a built-in function")
+        if (words[i] in vars)
+            warn(words[i] " is now a built-in variable")
+        if (words[i] in keys)
+            warn(words[i] " is now a keyword")
     }
 }
 function asplit(str, arr) { # make an assoc array from str
