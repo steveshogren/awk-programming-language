@@ -1,8 +1,7 @@
 BEGIN {
-    asplit("close system atan2 sin cos rand srand " \
-           "match sub gsub" , fcns)
-    asplit( "ARGC ARGV FNR RSTART RLENGTH SUBSEP", vars)
-    asplit("do delete function return", keys)
+    fcnCnt = split("close system atan2 sin cos rand srand match sub gsub" , fcns)
+    varCnt = split( "ARGC ARGV FNR RSTART RLENGTH SUBSEP", vars)
+    keyCnt = split("do delete function return", keys)
 }
      { line = $0 }
 /"/  { gsub(/"([^"]|\\")*"/ , "", line)  }
@@ -10,21 +9,19 @@ BEGIN {
 /#/  { sub(/#.*/, "", line) }
 
 {
-    n = split(line, words, "[^A-Za-z0-9_]+") # into words
-    for ( i = 1; i <= n; i++) {
-        if (words[i] in fcns)
-            warn(words[i] " is now a built-in function")
-        if (words[i] in vars)
-            warn(words[i] " is now a built-in variable")
-        if (words[i] in keys)
-            warn(words[i] " is now a keyword")
+    # n = split(line, words, "[^A-Za-z0-9_]+") # into words
+    for ( i = 1; i <= fcnCnt; i++) {
+        if (line ~ fcns[i])
+            warn(fcns[i] " is now a built-in function")
     }
-}
-function asplit(str, arr) { # make an assoc array from str
-    n = split(str, temp)
-    for (i = 1; i <= n; i++)
-        arr[temp[i]]++
-    return n
+    for ( i = 1; i <= varCnt; i++) {
+        if (line ~ vars[i])
+            warn(vars[i] " is now a built-in variable")
+    }
+    for ( i = 1; i <= keyCnt; i++) {
+        if (line ~ keys[i])
+            warn(keys[i] " is now a keyword")
+    }
 }
 function warn(s) {
     sub(/^[ \t]*/, "")
