@@ -1,6 +1,8 @@
 #!/bin/sh
 set -v
 
+
+: <<'COMMENT'
 # demonstrating syntax
 # pattern {action}
 # if 3rd column greater than 0, mult the 2nd and 3rd
@@ -731,5 +733,9 @@ $1 !~ /^CODE/ && NF == 2 { printf("%s {\n\tprintf(\"line %%d, %s: %%s\\n\",NR,$0
 '
 
 cat compat.awk | awk -f compat.awk
+
+COMMENT
+
+cat unusedvariables.awk | awk -f unusedvariables.awk
 
 set +v
