@@ -1,8 +1,7 @@
 BEGIN {
     asplit("close system atan2 sin cos rand srand " \
-            "match sub gsub" \
-           "ARGC ARGV FNR RSTART RLENGTH SUBSEP"    \
-           "do delete function return END BEGIN printf gsub", keys)
+            "match sub gsub ARGC ARGV FNR RSTART RLENGTH SUBSEP"    \
+           "do delete function return END BEGIN printf if", keys)
 }
      { line = $0 }
      /"/  { gsub(/"([^"]|\\")*"/ , "", line)  }
@@ -14,14 +13,14 @@ BEGIN {
     unusedVar = 1
     varCounts["a"] = 1
     for ( i = 1; i <= n; i++) {
-        if ((!(words[i] in keys)) && words[i] !~ /[0-9]+/)
+        if ((!(words[i] in keys)) && words[i] !~ /[0-9]+/ && words[i] != "")
             varCounts[words[i]]++
     }
 }
 
 END {
     for ( i in varCounts) {
-        # printf("varCounts[%s] = %d\n", i, varCounts[i])
+        printf("varCounts[%s] = %d\n", i, varCounts[i])
         if (varCounts[i] == 1)
             warn(i " is unused")
     }
@@ -36,7 +35,7 @@ function asplit(str, arr) { # make an assoc array from str
 
 function warn(s) {
     sub(/^[ \t]*/, "")
-    printf("%s\n\t\n", s)
+    printf("%s\n", s)
 }
 
 
