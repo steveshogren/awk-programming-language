@@ -736,6 +736,6 @@ cat compat.awk | awk -f compat.awk
 
 COMMENT
 
-cat unusedvariables.awk | awk -f unusedvariables.awk
+awk -f unusedvariables.awk unusedvariables.awk
 
 set +v
