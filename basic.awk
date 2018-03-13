@@ -734,8 +734,23 @@ $1 !~ /^CODE/ && NF == 2 { printf("%s {\n\tprintf(\"line %%d, %s: %%s\\n\",NR,$0
 
 cat compat.awk | awk -f compat.awk
 
-COMMENT
 
 awk -f unusedvariables.awk unusedvariables.awk
+
+COMMENT
+cat multiline/input.txt | awk '
+BEGIN { RS = ""; FS="\n "}
+{
+    printf("%s||#", x[split($1, x, " ")])
+    for (i = 1; i <= NF; i++)
+        printf("%s%s", $i, i < NF ? "||#" : "\n")
+}' | sort | awk '
+BEGIN { FS = "||#" }
+{
+    for (i = 2; i<= NF; i++)
+        printf("%s\n", $i)
+    printf("\n")
+}
+'
 
 set +v
