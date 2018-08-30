@@ -14,4 +14,6 @@ awk -f countriesqueries/prep3.awk pass=1 countries pass=2 countries | awk -f cou
 
 awk -f countriesqueries/prep3.awk pass=1 countries pass=2 countries | awk -f countriesqueries/form4.awk | tbl -Tascii
 
+awk -f table.awk countries
+
 set +v
