@@ -16,4 +16,6 @@ awk -f countriesqueries/prep3.awk pass=1 countries pass=2 countries | awk -f cou
 
 awk -f table.awk countries
 
+. countriesqueries/info.sh 'Can|USA'
+
 set +v
